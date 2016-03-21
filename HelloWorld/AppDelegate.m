@@ -7,16 +7,21 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
-
+@property (nonatomic, strong) ViewController *viewController;
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [[self window] setRootViewController:[self viewController]];
+    [[self window] makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -106,6 +111,7 @@
     }
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    [_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
     return _managedObjectContext;
 }
 
@@ -122,6 +128,14 @@
             abort();
         }
     }
+}
+
+- (ViewController *)viewController{
+    if (!_viewController){
+        _viewController = [[ViewController alloc] init];
+        [[_viewController view] setBackgroundColor:[UIColor whiteColor]];
+    }
+    return _viewController;
 }
 
 @end
