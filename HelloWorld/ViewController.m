@@ -52,7 +52,7 @@
 - (UILabel *)label{
     if (!_label){
         _label = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_label setText:@"Core Data"];
+        [_label setText:@"Crop"];
         [_label setTextAlignment:NSTextAlignmentCenter];
         [[self view] addSubview:_label];
         return _label;
