@@ -17,7 +17,11 @@
 		1CB6BC471C97564600741ED9 /* HelloWorldUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6BC461C97564600741ED9 /* HelloWorldUITests.m */; };
 		1CB6BC581C97583000741ED9 /* Car+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6BC551C97583000741ED9 /* Car+CoreDataProperties.m */; };
 		1CB6BC591C97583000741ED9 /* Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6BC571C97583000741ED9 /* Car.m */; };
-		1CF3013D1CAD7D320023C011 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CF3013C1CAD7D320023C011 /* View.xib */; };
+		1CD95E3F1CB4621100077C8B /* close-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD95E391CB4621100077C8B /* close-icon.png */; };
+		1CD95E401CB4621100077C8B /* close-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD95E3A1CB4621100077C8B /* close-icon@2x.png */; };
+		1CD95E411CB4621100077C8B /* search-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD95E3B1CB4621100077C8B /* search-icon.png */; };
+		1CD95E421CB4621100077C8B /* search-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD95E3C1CB4621100077C8B /* search-icon@2x.png */; };
+		1CD95E431CB4621100077C8B /* SSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD95E3E1CB4621100077C8B /* SSSearchBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +62,12 @@
 		1CB6BC551C97583000741ED9 /* Car+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Car+CoreDataProperties.m"; sourceTree = "<group>"; };
 		1CB6BC561C97583000741ED9 /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
 		1CB6BC571C97583000741ED9 /* Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Car.m; sourceTree = "<group>"; };
+		1CD95E391CB4621100077C8B /* close-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-icon.png"; sourceTree = "<group>"; };
+		1CD95E3A1CB4621100077C8B /* close-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-icon@2x.png"; sourceTree = "<group>"; };
+		1CD95E3B1CB4621100077C8B /* search-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon.png"; sourceTree = "<group>"; };
+		1CD95E3C1CB4621100077C8B /* search-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon@2x.png"; sourceTree = "<group>"; };
+		1CD95E3D1CB4621100077C8B /* SSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSearchBar.h; sourceTree = "<group>"; };
+		1CD95E3E1CB4621100077C8B /* SSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSearchBar.m; sourceTree = "<group>"; };
 		1CF3013C1CAD7D320023C011 /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +132,7 @@
 				1CB6BC551C97583000741ED9 /* Car+CoreDataProperties.m */,
 				1CB6BC561C97583000741ED9 /* Car.h */,
 				1CB6BC571C97583000741ED9 /* Car.m */,
+				1CD95E371CB4621100077C8B /* SSSearchBar */,
 				1CB6BC1E1C97564600741ED9 /* Supporting Files */,
 			);
 			path = HelloWorld;
@@ -151,6 +162,27 @@
 				1CB6BC481C97564600741ED9 /* Info.plist */,
 			);
 			path = HelloWorldUITests;
+			sourceTree = "<group>";
+		};
+		1CD95E371CB4621100077C8B /* SSSearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				1CD95E381CB4621100077C8B /* SearchBarIcons */,
+				1CD95E3D1CB4621100077C8B /* SSSearchBar.h */,
+				1CD95E3E1CB4621100077C8B /* SSSearchBar.m */,
+			);
+			path = SSSearchBar;
+			sourceTree = "<group>";
+		};
+		1CD95E381CB4621100077C8B /* SearchBarIcons */ = {
+			isa = PBXGroup;
+			children = (
+				1CD95E391CB4621100077C8B /* close-icon.png */,
+				1CD95E3A1CB4621100077C8B /* close-icon@2x.png */,
+				1CD95E3B1CB4621100077C8B /* search-icon.png */,
+				1CD95E3C1CB4621100077C8B /* search-icon@2x.png */,
+			);
+			path = SearchBarIcons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +289,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CB6BC311C97564600741ED9 /* LaunchScreen.storyboard in Resources */,
-				1CF3013D1CAD7D320023C011 /* View.xib in Resources */,
+				1CD95E3F1CB4621100077C8B /* close-icon.png in Resources */,
+				1CD95E411CB4621100077C8B /* search-icon.png in Resources */,
+				1CD95E421CB4621100077C8B /* search-icon@2x.png in Resources */,
+				1CD95E401CB4621100077C8B /* close-icon@2x.png in Resources */,
 				1CB6BC2E1C97564600741ED9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +322,7 @@
 				1CB6BC261C97564600741ED9 /* ViewController.m in Sources */,
 				1CB6BC581C97583000741ED9 /* Car+CoreDataProperties.m in Sources */,
 				1CB6BC231C97564600741ED9 /* AppDelegate.m in Sources */,
+				1CD95E431CB4621100077C8B /* SSSearchBar.m in Sources */,
 				1CB6BC201C97564600741ED9 /* main.m in Sources */,
 				1CB6BC2C1C97564600741ED9 /* HelloWorld.xcdatamodeld in Sources */,
 			);
