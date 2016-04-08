@@ -238,7 +238,7 @@
         [_photoRollButton addTarget:self action:@selector(didTapPhotoRollButton:) forControlEvents:UIControlEventTouchUpInside];
         [[_photoRollButton layer] setZPosition:3.0f];
         _photoRollButton.tag = 1;
-        [_photoRollButton setBackgroundImage:[UIImage imageNamed:@"LWCameraPhotoRollImage"] forState:UIControlStateNormal];
+        [_photoRollButton setBackgroundImage:[UIImage imageNamed:@"CameraPhotoRollImage"] forState:UIControlStateNormal];
         if (_allowsPhotoRoll){
             [self.view addSubview:_photoRollButton];
             [self.view bringSubviewToFront:_photoRollButton];
@@ -253,7 +253,7 @@
         _captureBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         [_captureBtn setFrame:CGRectZero];
         [_captureBtn addTarget:self action:@selector(didTapCapturePhoto) forControlEvents:UIControlEventTouchUpInside];
-        [_captureBtn setBackgroundImage:[UIImage imageNamed:@"LWCameraCapture"] forState:UIControlStateNormal];
+        [_captureBtn setBackgroundImage:[UIImage imageNamed:@"CameraCapture"] forState:UIControlStateNormal];
         [[_captureBtn layer] setZPosition:3.0];
         [self.view addSubview:_captureBtn];
         [self.view bringSubviewToFront:_captureBtn];
@@ -265,7 +265,7 @@
 - (UIImageView *)backImageFrame{
     if (!_backImageFrame){
         _backImageFrame = [[UIImageView alloc]initWithFrame:CGRectZero];
-        [_backImageFrame setImage:[UIImage imageNamed:@"LWCamerBackImage"]];
+        [_backImageFrame setImage:[UIImage imageNamed:@"CamerBackImage"]];
         [[_backImageFrame layer] setZPosition:3.0];
         [self.view addSubview:_backImageFrame];
     }
@@ -293,7 +293,7 @@
         _flashBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         [_flashBtn setFrame:CGRectZero];
         [_flashBtn addTarget:self action:@selector(didTapFlashButton:) forControlEvents:UIControlEventTouchUpInside];
-        [_flashBtn setBackgroundImage:[UIImage imageNamed:@"LWCameraFlashImage"] forState:UIControlStateNormal];
+        [_flashBtn setBackgroundImage:[UIImage imageNamed:@"CameraFlashImage"] forState:UIControlStateNormal];
         [_flashBtn setTintColor:[UIColor blueColor]];
         [[_flashBtn layer] setZPosition:3.0];
         if (_allowsFlash){
@@ -308,7 +308,7 @@
     if (!_switchCameraBtn){
         _switchCameraBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         [_switchCameraBtn setFrame:CGRectZero];
-        [_switchCameraBtn setImage:[UIImage imageNamed:@"LWCamerRotateImage"] forState:UIControlStateNormal];
+        [_switchCameraBtn setImage:[UIImage imageNamed:@"CamerRotateImage"] forState:UIControlStateNormal];
         [[_switchCameraBtn layer] setZPosition:3.0];
         [_switchCameraBtn addTarget:self action:@selector(didTapSwitchCameraButton:) forControlEvents:UIControlEventTouchUpInside];
         if (_allowsFlipCamera){
@@ -677,12 +677,12 @@
         if (_device.flashActive) {
             if([_device lockForConfiguration:nil]) {
                 _device.flashMode = AVCaptureFlashModeOff;
-                [_flashBtn setBackgroundImage:[UIImage imageNamed:@"LWCameraFlashImage"] forState:UIControlStateNormal];
+                [_flashBtn setBackgroundImage:[UIImage imageNamed:@"CameraFlashImage"] forState:UIControlStateNormal];
             }
         } else {
             if([_device lockForConfiguration:nil]) {
                 _device.flashMode = AVCaptureFlashModeOn;
-                [_flashBtn setBackgroundImage:[UIImage imageNamed:@"LWCameraFlashImageOn"] forState:UIControlStateNormal];
+                [_flashBtn setBackgroundImage:[UIImage imageNamed:@"CameraFlashImageOn"] forState:UIControlStateNormal];
             }
         }
         [_device unlockForConfiguration];

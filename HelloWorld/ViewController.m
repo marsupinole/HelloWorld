@@ -8,9 +8,10 @@
 
 #import "ViewController.h"
 #import "LWCameraViewController.h"
+#import "UIImage+LWAdditions.h"
 
-#define kInsuranceCardButtonHeight                       (192.0f)
 #define kInsuranceCardButtonWidth                        (320.0f)
+#define kImageRadius                (8.0f)
 
 @interface ViewController ()<LWCameraViewControllerDelegate>
 @property (nonatomic, strong) UILabel     *label;
@@ -21,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
 }
 
 - (void)viewWillLayoutSubviews{
@@ -32,6 +33,12 @@
     labelFrame.size.height = 60.0f;
     labelFrame.size.width  = CGRectGetWidth([[self view] frame]);
     [[self label] setFrame:labelFrame];
+    
+    CGRect imageFrame = [[self imageView] frame];
+    imageFrame.size     = CGSizeMake(kInsuranceCardButtonWidth, kInsuranceCardButtonWidth);
+    imageFrame.origin.y = CGRectGetMaxY(labelFrame);
+    imageFrame.origin.x = (CGRectGetWidth([[self view] frame]) - imageFrame.size.width)/2;
+    [[self imageView] setFrame:imageFrame];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,9 +62,17 @@
         _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         [[_imageView layer] setBorderColor:[UIColor blackColor].CGColor];
         [[_imageView layer] setBorderWidth:1.0f];
+        [_imageView setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap:)];
+        [_imageView addGestureRecognizer:tap];
         [[self view] addSubview:_imageView];
     }
     return _imageView;
+}
+
+- (void)didTap:(id)sender{
+    
+    [self presentCamera];
 }
 
 #pragma mark - camera
@@ -67,12 +82,12 @@
     LWCameraViewController *camera = [[LWCameraViewController alloc]init];
     [camera setCameraShouldDefaultToFront:NO];
     [camera setViewFinderHasOverlay:YES];
-    [camera setAllowsFlipCamera:NO];
+    [camera setAllowsFlipCamera:YES];
     [camera setAllowsFlash:YES];
     [camera setAllowsPhotoRoll:YES];
     [camera setDelegate:self];
     [camera setShouldResizeToViewFinder:NO];
-    [camera setCardSize:CGSizeMake(kInsuranceCardButtonWidth*2, kInsuranceCardButtonHeight*2)];
+    [camera setCardSize:CGSizeMake(kInsuranceCardButtonWidth*2, kInsuranceCardButtonWidth*2)];
     [self presentViewController:camera animated:YES completion:^{
         
         [[camera view] setNeedsLayout];
@@ -81,10 +96,37 @@
 
 - (void)LWCameraViewController:(LWCameraViewController *)camera didFinishWithImage:(UIImage *)image{
     
+    CGFloat cameraWidth  = camera.viewFinderSize.width;
+    CGFloat cameraHeight = camera.viewFinderSize.height;
+    __block UIImage *anImage = image;
+    
+    [camera dismissViewControllerAnimated:YES completion:^{
+        
+        anImage = [anImage scaleProportionalToSize:CGSizeMake(cameraWidth, cameraHeight)];
+        //todo: figure out why 1.5 works. it's a hack.
+        anImage = [anImage croppedImageFromImage:anImage withSize:CGSizeMake(kInsuranceCardButtonWidth*1.5, kInsuranceCardButtonWidth*1.5)];
+        anImage = [anImage makeRoundedImage:anImage radius:kImageRadius];
+        
+        [[self imageView] setImage:anImage];
+        
+    }];
+    
 }
 
 - (void)LWCameraViewController:(LWCameraViewController *)controller didFinishCroppingImage:(UIImage *)image transform:(CGAffineTransform)transform cropRect:(CGRect)cropRect{
     
+    __block UIImage *anImage = image;
+    [controller dismissViewControllerAnimated:YES completion:^{
+        
+        anImage = [anImage makeRoundedImage:anImage radius:kImageRadius];
+        
+        if (anImage){
+            [[self imageView] setImage:anImage];
+        }else{
+            NSLog(@"reached no animage");
+        }
+        
+    }];
 }
 
 @end
