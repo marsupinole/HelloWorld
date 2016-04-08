@@ -1,17 +1,17 @@
 //
-//  LWCameraViewController.m
-//  Encounter
+//  CameraViewController.m
+//  HelloWorld
 //
 //  Created by Mike Leveton on 8/23/15.
-//  Copyright (c) 2015 LifeWallet. All rights reserved.
+//  Copyright (c) 2015 Mike Leveton. All rights reserved.
 //
 
 
 #import <MobileCoreServices/UTCoreTypes.h>
-#import "LWCameraViewController.h"
+#import "CameraViewController.h"
 
-#import "UIImage+LWAdditions.h"
-#import "LWCameraOverlayView.h"
+#import "UIImage+Additions.h"
+#import "CameraOverlayView.h"
 #import "PhotoCropView.h"
 
 /*To get authorization status */
@@ -24,7 +24,7 @@
 #define kLocStringAllowPhotoAccess              NSLocalizedString(@"Go to Settings to give Encounter access", @"Go to Settings to give Encounter access")
 #define kImageRadius            (8.0f)
 
-@interface LWCameraViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface CameraViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIButton                  *photoRollButton;
 @property (nonatomic, strong) UIButton                  *backBtn;
@@ -42,7 +42,7 @@
 @property (nonatomic, strong) UIImageView               *backImageFrame;
 @property (nonatomic, strong) UIImageView               *focusImageView;
 @property (nonatomic, strong) UIImagePickerController   *photoRollController;
-@property (nonatomic, strong) LWCameraOverlayView       *cardOverlay;
+@property (nonatomic, strong) CameraOverlayView       *cardOverlay;
 @property (nonatomic)         PhotoCropView             *cropView;
 @property (nonatomic, assign) CGFloat                   screenWidth;
 @property (nonatomic, assign) CGFloat                   screenHeight;
@@ -58,7 +58,7 @@
 
 @end
 
-@implementation LWCameraViewController;
+@implementation CameraViewController;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -389,14 +389,14 @@
     return _bottomView;
 }
 
-- (LWCameraOverlayView *)cardOverlay{
+- (CameraOverlayView *)cardOverlay{
     if (!_cardOverlay){
         CGFloat viewWidth = [self imageStreamView].frame.size.width;
         CGFloat viewHeight = [self imageStreamView].frame.size.height;
         CGSize viewSize = CGSizeMake(viewWidth, viewHeight);
         CGSize cardSize = CGSizeMake(_cardSize.width, _cardSize.height);
         UIColor *color = [self colorWithHexString:@"D8D8D8" withOpacity:0.60f];
-        _cardOverlay = [[LWCameraOverlayView alloc] initWithViewSize:viewSize cardSize:cardSize andColor:color];
+        _cardOverlay = [[CameraOverlayView alloc] initWithViewSize:viewSize cardSize:cardSize andColor:color];
         [_cardOverlay.layer setZPosition:1.0];
         [_cardOverlay setUserInteractionEnabled:YES];
         if (_viewFinderHasOverlay) {
@@ -484,7 +484,7 @@
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     
     if (devices.count == 0) {
-        NSLog(@"LWCamera: No devices found (for example: simulator)");
+        NSLog(@"Camera: No devices found (for example: simulator)");
         return;
     }
     
@@ -605,9 +605,9 @@
          if (_shouldResizeToViewFinder){
            [self resizeImageWithImage:[self capturedImageView].image];
          }else{
-             if ([[self delegate] respondsToSelector:@selector(LWCameraViewController:didFinishWithImage:)]) {
+             if ([[self delegate] respondsToSelector:@selector(CameraViewController:didFinishWithImage:)]) {
                  capturedImage = [capturedImage normalizedImage];
-                 [[self delegate] LWCameraViewController:self didFinishWithImage:capturedImage];
+                 [[self delegate] CameraViewController:self didFinishWithImage:capturedImage];
              }
              [self cleanUp];
          }
@@ -815,9 +815,9 @@
     
     [self cleanUp];
     
-    if ([[self delegate] respondsToSelector:@selector(LWCameraViewController:didFinishWithImage:)]) {
+    if ([[self delegate] respondsToSelector:@selector(CameraViewController:didFinishWithImage:)]) {
         image = [image normalizedImage];
-        [[self delegate] LWCameraViewController:self didFinishWithImage:image];
+        [[self delegate] CameraViewController:self didFinishWithImage:image];
     }
 }
 
@@ -974,8 +974,8 @@
     
     //_isSaveWaitingForResizedImage = YES;
     
-    if ([[self delegate] respondsToSelector:@selector(LWCameraViewController:didFinishCroppingImage:transform:cropRect:)]) {
-        [[self delegate] LWCameraViewController:self didFinishCroppingImage:self.cropView.croppedImage transform:self.cropView.rotation cropRect:self.cropView.zoomedCropRect];
+    if ([[self delegate] respondsToSelector:@selector(CameraViewController:didFinishCroppingImage:transform:cropRect:)]) {
+        [[self delegate] CameraViewController:self didFinishCroppingImage:self.cropView.croppedImage transform:self.cropView.rotation cropRect:self.cropView.zoomedCropRect];
     }
 }
 

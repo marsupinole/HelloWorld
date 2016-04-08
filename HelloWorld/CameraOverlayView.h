@@ -1,14 +1,14 @@
 //
-//  LWCameraOverlayView.h
-//  Encounter
+//  CameraOverlayView.h
+//  HelloWorld
 //
 //  Created by Mike Leveton on 11/6/15.
-//  Copyright © 2015 LifeWallet. All rights reserved.
+//  Copyright © 2015 Mike Leveton. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface LWCameraOverlayView : UIView
+@interface CameraOverlayView : UIView
 
 @property (nonatomic, assign) CGSize  viewSize;
 @property (nonatomic, assign) CGSize  cardSize;

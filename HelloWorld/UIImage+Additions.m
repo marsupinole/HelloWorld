@@ -1,12 +1,4 @@
-//
-//  UIImage+LWAdditions.m
-//  LifeWalletMobile
-//
-//  Created by LifeWallet on 3/3/15.
-//  Copyright (c) 2015 LifeWallet. All rights reserved.
-//
-
-#import "UIImage+LWAdditions.h"
+#import "UIImage+Additions.h"
 
 
 @implementation UIImage (LWAdditions)

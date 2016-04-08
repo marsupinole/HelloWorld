@@ -1,18 +1,18 @@
 //
-//  LWCameraOverlayView.m
-//  Encounter
+//  CameraOverlayView.m
+//  HelloWorld
 //
 //  Created by Mike Leveton on 11/6/15.
-//  Copyright © 2015 LifeWallet. All rights reserved.
+//  Copyright © 2015 Mike Leveton. All rights reserved.
 //
 
-#import "LWCameraOverlayView.h"
+#import "CameraOverlayView.h"
 
-@interface LWCameraOverlayView()
+@interface CameraOverlayView()
 @property (nonatomic, strong) UIColor *color;
 @end
 
-@implementation LWCameraOverlayView
+@implementation CameraOverlayView
 
 -(id)initWithViewSize:(CGSize)viewSize cardSize:(CGSize)cardSize andColor:(UIColor *)color{
     self = [super init];

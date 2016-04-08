@@ -1,9 +1,9 @@
 //
 //  PhotoCropView.h
-//  HealthBook
+//  HelloWorld
 //
 //  Created by Mike Leveton on 12/6/15.
-//  Copyright © 2015 LifeWallet. All rights reserved.
+//  Copyright © 2015 Mike Leveton. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

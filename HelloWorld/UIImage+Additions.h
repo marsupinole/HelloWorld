@@ -1,11 +1,3 @@
-//
-//  UIImage+LWAdditions.h
-//  LifeWalletMobile
-//
-//  Created by LifeWallet on 3/3/15.
-//  Copyright (c) 2015 LifeWallet. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 typedef enum {
     LWImageResizeStrech,
@@ -13,7 +5,7 @@ typedef enum {
     LWImageResizeAspectLargest
 } LWImageResizeOptions;
 
-@interface UIImage (LWAdditions)
+@interface UIImage (Additions)
 // preserves aspect ratio by default
 - (UIImage *)imageWithSize:(CGSize)size;
 - (UIImage *)imageWithSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspectRatio;

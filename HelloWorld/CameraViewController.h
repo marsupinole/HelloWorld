@@ -1,9 +1,9 @@
 //
-//  LWCameraViewController.h
-//  Encounter
+//  CameraViewController.h
+//  HelloWorld
 //
 //  Created by Mike Leveton on 8/23/15.
-//  Copyright (c) 2015 LifeWallet. All rights reserved.
+//  Copyright (c) 2015 Mike Leveton. All rights reserved.
 //
 
 typedef enum : NSUInteger {
@@ -14,14 +14,14 @@ typedef enum : NSUInteger {
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@class LWCameraViewController;
+@class CameraViewController;
 
-@protocol LWCameraViewControllerDelegate;
+@protocol CameraViewControllerDelegate;
 
-@interface LWCameraViewController : UIViewController
+@interface CameraViewController : UIViewController
 
 @property (nonatomic) CGRect imageCropRect;
-@property (nonatomic, weak) id <LWCameraViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <CameraViewControllerDelegate> delegate;
 @property (nonatomic, assign) CGSize cardSize;
 @property (nonatomic, assign) CGSize viewFinderSize;
 @property (nonatomic, assign, readonly) BOOL allowsPhotoRoll;
@@ -48,14 +48,14 @@ typedef enum : NSUInteger {
 
 @end
 
-@protocol LWCameraViewControllerDelegate<NSObject>
+@protocol CameraViewControllerDelegate<NSObject>
 
 @required
-- (void)LWCameraViewController:(LWCameraViewController *)camera didFinishWithImage:(UIImage *)image;
-- (void)LWCameraViewController:(LWCameraViewController *)controller didFinishCroppingImage:(UIImage *)image transform:(CGAffineTransform)transform cropRect:(CGRect)cropRect;
+- (void)CameraViewController:(CameraViewController *)camera didFinishWithImage:(UIImage *)image;
+- (void)CameraViewController:(CameraViewController *)controller didFinishCroppingImage:(UIImage *)image transform:(CGAffineTransform)transform cropRect:(CGRect)cropRect;
 
 @optional
 
-- (void)cameraDidLoadCameraIntoView:(LWCameraViewController *)camera;
+- (void)cameraDidLoadCameraIntoView:(CameraViewController *)camera;
 
 @end

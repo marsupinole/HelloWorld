@@ -7,13 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "LWCameraViewController.h"
-#import "UIImage+LWAdditions.h"
+#import "CameraViewController.h"
+#import "UIImage+Additions.h"
 
 #define kInsuranceCardButtonWidth                        (320.0f)
 #define kImageRadius                (8.0f)
 
-@interface ViewController ()<LWCameraViewControllerDelegate>
+@interface ViewController ()<CameraViewControllerDelegate>
 @property (nonatomic, strong) UILabel     *label;
 @property (nonatomic, strong) UIImageView *imageView;
 @end
@@ -79,7 +79,7 @@
 
 - (void)presentCamera{
     
-    LWCameraViewController *camera = [[LWCameraViewController alloc]init];
+    CameraViewController *camera = [[CameraViewController alloc]init];
     [camera setCameraShouldDefaultToFront:NO];
     [camera setViewFinderHasOverlay:YES];
     [camera setAllowsFlipCamera:YES];
@@ -94,7 +94,7 @@
     }];
 }
 
-- (void)LWCameraViewController:(LWCameraViewController *)camera didFinishWithImage:(UIImage *)image{
+- (void)CameraViewController:(CameraViewController *)camera didFinishWithImage:(UIImage *)image{
     
     CGFloat cameraWidth  = camera.viewFinderSize.width;
     CGFloat cameraHeight = camera.viewFinderSize.height;
@@ -113,7 +113,7 @@
     
 }
 
-- (void)LWCameraViewController:(LWCameraViewController *)controller didFinishCroppingImage:(UIImage *)image transform:(CGAffineTransform)transform cropRect:(CGRect)cropRect{
+- (void)CameraViewController:(CameraViewController *)controller didFinishCroppingImage:(UIImage *)image transform:(CGAffineTransform)transform cropRect:(CGRect)cropRect{
     
     __block UIImage *anImage = image;
     [controller dismissViewControllerAnimated:YES completion:^{
