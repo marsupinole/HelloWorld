@@ -7,40 +7,30 @@
 //
 
 #import "ViewController.h"
-#import "AppDelegate.h"
-#import "Car.h"
+#import "LWCameraViewController.h"
 
-@interface ViewController ()
-@property (nonatomic, strong) UILabel *label;
+#define kInsuranceCardButtonHeight                       (192.0f)
+#define kInsuranceCardButtonWidth                        (320.0f)
+
+@interface ViewController ()<LWCameraViewControllerDelegate>
+@property (nonatomic, strong) UILabel     *label;
+@property (nonatomic, strong) UIImageView *imageView;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSManagedObjectContext *context = [appDelegate managedObjectContext];
-    NSEntityDescription *addressEntity  = [NSEntityDescription entityForName:@"Car" inManagedObjectContext:context];
-    Car *car0   = [[Car alloc] initWithEntity:addressEntity insertIntoManagedObjectContext:context];
-    [car0 setDriver:@"mike"];
-    
-    NSError *error = nil;
-    if (![context save:&error]) {
-        NSLog(@"save error: %@", error);
-    }else{
-        NSLog(@"save 0 ok");
-    }
-    
+
 }
 
 - (void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
     
     CGRect labelFrame = [[self label] frame];
-    labelFrame.origin.y = 20.0f;
+    labelFrame.origin.y    = 20.0f;
     labelFrame.size.height = 60.0f;
-    labelFrame.size.width = CGRectGetWidth([[self view] frame]);
+    labelFrame.size.width  = CGRectGetWidth([[self view] frame]);
     [[self label] setFrame:labelFrame];
 }
 
@@ -60,5 +50,41 @@
     return _label;
 }
 
+- (UIImageView *)imageView{
+    if (!_imageView){
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [[_imageView layer] setBorderColor:[UIColor blackColor].CGColor];
+        [[_imageView layer] setBorderWidth:1.0f];
+        [[self view] addSubview:_imageView];
+    }
+    return _imageView;
+}
+
+#pragma mark - camera
+
+- (void)presentCamera{
+    
+    LWCameraViewController *camera = [[LWCameraViewController alloc]init];
+    [camera setCameraShouldDefaultToFront:NO];
+    [camera setViewFinderHasOverlay:YES];
+    [camera setAllowsFlipCamera:NO];
+    [camera setAllowsFlash:YES];
+    [camera setAllowsPhotoRoll:YES];
+    [camera setDelegate:self];
+    [camera setShouldResizeToViewFinder:NO];
+    [camera setCardSize:CGSizeMake(kInsuranceCardButtonWidth*2, kInsuranceCardButtonHeight*2)];
+    [self presentViewController:camera animated:YES completion:^{
+        
+        [[camera view] setNeedsLayout];
+    }];
+}
+
+- (void)LWCameraViewController:(LWCameraViewController *)camera didFinishWithImage:(UIImage *)image{
+    
+}
+
+- (void)LWCameraViewController:(LWCameraViewController *)controller didFinishCroppingImage:(UIImage *)image transform:(CGAffineTransform)transform cropRect:(CGRect)cropRect{
+    
+}
 
 @end
