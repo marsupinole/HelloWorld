@@ -6,7 +6,15 @@
 //  Copyright © 2016 Mike Leveton. All rights reserved.
 //
 
+
+/* 
+ when we want to update researchkit, someone stashes changes, pulls the updates, and then readds the changes and then everyone pulls
+ */
+
 #import "ViewController.h"
+#import <ResearchKit/ResearchKit.h>
+#import <ResearchKit/ORKTask.h>
+#import <ResearchKit/MikeViewControleller.h>
 
 #define kImageWidth (320.0f)
 
@@ -69,7 +77,15 @@
 #pragma mark - selectors
 
 - (void)didTapButton:(id)sender{
+    [self presentTheTask:@[]];
+}
+
+- (void)presentTheTask:(NSArray *)fromArray {
+    //LWOrderedTask *task = [[LWOrderedTask alloc] initWithIdentifier:[NSString stringWithFormat:@"%@", self.channelID] steps:fromArray];
+    MikeViewControleller *vc = [[MikeViewControleller alloc] init];
     
+    //ORKOrderedTask *task = [ORKOrderedTask new];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 @end

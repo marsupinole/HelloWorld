@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CAE7BB31CBC3014008324DA /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1CAE7BAE1CBC2EA8008324DA /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1CB6BC201C97564600741ED9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6BC1F1C97564600741ED9 /* main.m */; };
 		1CB6BC231C97564600741ED9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6BC221C97564600741ED9 /* AppDelegate.m */; };
 		1CB6BC261C97564600741ED9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6BC251C97564600741ED9 /* ViewController.m */; };
@@ -18,6 +19,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1CAE7BAD1CBC2EA8008324DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1CAE7BA71CBC2EA8008324DA /* ResearchKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B183A5951A8535D100C76870;
+			remoteInfo = ResearchKit;
+		};
+		1CAE7BAF1CBC2EA8008324DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1CAE7BA71CBC2EA8008324DA /* ResearchKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 86CC8E9A1AC09332001CCD89;
+			remoteInfo = ResearchKitTests;
+		};
 		1CB6BC381C97564600741ED9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1CB6BC131C97564500741ED9 /* Project object */;
@@ -34,7 +49,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1CAE7BB21CBC2FEB008324DA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1CAE7BB31CBC3014008324DA /* ResearchKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1CAE7BA71CBC2EA8008324DA /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = ../ResearchKit/ResearchKit.xcodeproj; sourceTree = "<group>"; };
 		1CB6BC1B1C97564600741ED9 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB6BC1F1C97564600741ED9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1CB6BC211C97564600741ED9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -79,9 +109,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1CAE7BA81CBC2EA8008324DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1CAE7BAE1CBC2EA8008324DA /* ResearchKit.framework */,
+				1CAE7BB01CBC2EA8008324DA /* ResearchKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1CB6BC121C97564500741ED9 = {
 			isa = PBXGroup;
 			children = (
+				1CAE7BA71CBC2EA8008324DA /* ResearchKit.xcodeproj */,
 				1CB6BC1D1C97564600741ED9 /* HelloWorld */,
 				1CB6BC3A1C97564600741ED9 /* HelloWorldTests */,
 				1CB6BC451C97564600741ED9 /* HelloWorldUITests */,
@@ -152,6 +192,7 @@
 				1CB6BC171C97564600741ED9 /* Sources */,
 				1CB6BC181C97564600741ED9 /* Frameworks */,
 				1CB6BC191C97564600741ED9 /* Resources */,
+				1CAE7BB21CBC2FEB008324DA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -231,6 +272,12 @@
 			mainGroup = 1CB6BC121C97564500741ED9;
 			productRefGroup = 1CB6BC1C1C97564600741ED9 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1CAE7BA81CBC2EA8008324DA /* Products */;
+					ProjectRef = 1CAE7BA71CBC2EA8008324DA /* ResearchKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1CB6BC1A1C97564600741ED9 /* HelloWorld */,
@@ -239,6 +286,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		1CAE7BAE1CBC2EA8008324DA /* ResearchKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchKit.framework;
+			remoteRef = 1CAE7BAD1CBC2EA8008324DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1CAE7BB01CBC2EA8008324DA /* ResearchKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ResearchKitTests.xctest;
+			remoteRef = 1CAE7BAF1CBC2EA8008324DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1CB6BC191C97564600741ED9 /* Resources */ = {
