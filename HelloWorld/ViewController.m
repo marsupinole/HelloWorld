@@ -8,8 +8,11 @@
 
 #import "ViewController.h"
 
+#define kImageWidth (320.0f)
+
 @interface ViewController ()
-@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UILabel  *label;
+@property (nonatomic, strong) UIButton *button;
 @end
 
 @implementation ViewController
@@ -23,10 +26,16 @@
     [super viewWillLayoutSubviews];
     
     CGRect labelFrame = [[self label] frame];
-    labelFrame.origin.y = 20.0f;
+    labelFrame.origin.y    = 20.0f;
     labelFrame.size.height = 60.0f;
-    labelFrame.size.width = CGRectGetWidth([[self view] frame]);
+    labelFrame.size.width  = CGRectGetWidth([[self view] frame]);
     [[self label] setFrame:labelFrame];
+    
+    CGRect buttonFrame   = [[self button] frame];
+    buttonFrame.size     = CGSizeMake(kImageWidth, kImageWidth);
+    buttonFrame.origin.y = CGRectGetMaxY(labelFrame);
+    buttonFrame.origin.x = (CGRectGetWidth([[self view] frame]) - buttonFrame.size.width)/2;
+    [[self button] setFrame:buttonFrame];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,5 +54,22 @@
     return _label;
 }
 
+- (UIButton *)button{
+    if (!_button){
+        _button = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_button setTitle:@"launch RK" forState:UIControlStateNormal];
+        [[_button titleLabel] setTextAlignment:NSTextAlignmentCenter];
+        [[self view] addSubview:_button];
+        return _button;
+    }
+    return _button;
+}
+
+#pragma mark - selectors
+
+- (void)didTapButton:(id)sender{
+    
+}
 
 @end
