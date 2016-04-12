@@ -13,6 +13,7 @@
 #import "ViewController.h"
 #import "CameraViewController.h"
 #import "UIImage+Additions.h"
+#import "CropView.h"
 
 #define imageWidth                                       (320.0f)
 #define imageToCropWidth                                 (340.0f)
@@ -23,7 +24,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIImageView *cropImageView;
 
-@property (nonatomic, strong) UIView      *cropView;
+@property (nonatomic, strong) CropView      *cropView;
 @property (nonatomic, strong) UIImageView *imageToCrop;
 @property (nonatomic, assign) CGFloat     trackerScale;
 @end
@@ -33,11 +34,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    CGRect imageToCropFrame = [[self imageToCrop] frame];
+    imageToCropFrame.size      = CGSizeMake(imageToCropWidth, imageToCropWidth);
+    imageToCropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - imageToCropFrame.size.height)/2;
+    imageToCropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - imageToCropFrame.size.width)/2;
+    [[self imageToCrop] setFrame:imageToCropFrame];
+    
+    CGRect cropFrame = [[self cropView] frame];
+    cropFrame.size      = CGSizeMake(imageWidth, imageWidth);
+    cropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - cropFrame.size.height)/2;
+    cropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - cropFrame.size.width)/2;
+    [[self cropView] setFrame:cropFrame];
+    
 }
 
 - (void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
-    
+    NSLog(@"layout called");
     CGRect labelFrame = [[self label] frame];
     labelFrame.origin.y    = 20.0f;
     labelFrame.size.height = 60.0f;
@@ -56,17 +69,11 @@
     cropImageFrame.origin.x = CGRectGetWidth([[self view] frame]) - cropImageFrame.size.width;
     [[self cropImageView] setFrame:cropImageFrame];
     
-    CGRect cropFrame = [[self cropView] frame];
-    cropFrame.size      = CGSizeMake(imageWidth, imageWidth);
-    cropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - cropFrame.size.height)/2;
-    cropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - cropFrame.size.width)/2;
-    [[self cropView] setFrame:cropFrame];
-    
-    CGRect imageToCropFrame = [[self imageToCrop] frame];
-    imageToCropFrame.size      = CGSizeMake(imageToCropWidth, imageToCropWidth);
-    imageToCropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - imageToCropFrame.size.height)/2;
-    imageToCropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - imageToCropFrame.size.width)/2;
-    [[self imageToCrop] setFrame:imageToCropFrame];
+//    CGRect imageToCropFrame = [[self imageToCrop] frame];
+//    imageToCropFrame.size      = CGSizeMake(imageToCropWidth, imageToCropWidth);
+//    imageToCropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - imageToCropFrame.size.height)/2;
+//    imageToCropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - imageToCropFrame.size.width)/2;
+//    [[self imageToCrop] setFrame:imageToCropFrame];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -117,11 +124,11 @@
     if (!_imageToCrop){
         _imageToCrop = [[UIImageView alloc] initWithFrame:CGRectZero];
         [_imageToCrop setImage:[UIImage imageNamed:@"imageToCrop"]];
-        [[_imageToCrop layer] setBorderColor:[UIColor redColor].CGColor];
-        [[_imageToCrop layer] setBorderWidth:1.0f];
+        //[[_imageToCrop layer] setBorderColor:[UIColor redColor].CGColor];
+        //[[_imageToCrop layer] setBorderWidth:1.0f];
         [_imageToCrop setUserInteractionEnabled:YES];
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didPan:)];
-        [_imageToCrop addGestureRecognizer:pan];
+        //[_imageToCrop addGestureRecognizer:pan];
         UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(didPinch:)];
         [_imageToCrop addGestureRecognizer:pinch];
         [[self view] addSubview:_imageToCrop];
@@ -129,12 +136,16 @@
     return _imageToCrop;
 }
 
-- (UIView *)cropView{
+- (CropView *)cropView{
     if (!_cropView){
-        _cropView = [[UIView alloc] initWithFrame:CGRectZero];
-        [_cropView setBackgroundColor:[UIColor blackColor]];
-        [[_cropView layer] setOpacity:0.5f];
-        [[_cropView layer] setZPosition:2.0f];
+        _cropView = [[CropView alloc] initWithFrame:CGRectZero];
+        //[_cropView setBackgroundColor:[UIColor blueColor]];
+        //[[_cropView layer] setOpacity:0.0f];
+        //[_cropView setAlpha:0.5];
+        [[_cropView layer] setZPosition:1.0f];
+        //[[_cropView layer] setBorderWidth:1.0f];
+        [_cropView setUserInteractionEnabled:YES];
+        //[[_cropView layer] setBorderColor:[UIColor blackColor].CGColor];
         [[self view] addSubview:_cropView];
         return _cropView;
     }
@@ -170,9 +181,10 @@
     
 }
 
-- (void)didPinch:(UIPinchGestureRecognizer *)pinch{
+- (void)didPinch:(UIPinchGestureRecognizer *)recognizer{
+    recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
+    recognizer.scale = 1;
     
-    NSLog(@"did pinch");
 //    pinch.view.transform = CGAffineTransformScale(pinch.view.transform, pinch.scale, pinch.scale);
 //    pinch.scale = 1;
     
