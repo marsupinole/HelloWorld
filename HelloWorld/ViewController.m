@@ -13,6 +13,7 @@
 #import "ViewController.h"
 #import "CameraViewController.h"
 #import "UIImage+Additions.h"
+#import "UIImage+PhotoCrop.h"
 #import "CropView.h"
 
 #define imageWidth                                       (320.0f)
@@ -20,10 +21,10 @@
 #define kImageRadius                                     (8.0f)
 
 @interface ViewController ()<CameraViewControllerDelegate>
+@property (nonatomic, strong) UIImage     *image;
 @property (nonatomic, strong) UILabel     *label;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIImageView *cropImageView;
-
 @property (nonatomic, strong) CropView      *cropView;
 @property (nonatomic, strong) UIImageView *imageToCrop;
 @property (nonatomic, assign) CGFloat     trackerScale;
@@ -34,23 +35,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    /*view with gesture CANNOT be in layoutSubviews */
     CGRect imageToCropFrame = [[self imageToCrop] frame];
     imageToCropFrame.size      = CGSizeMake(imageToCropWidth, imageToCropWidth);
     imageToCropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - imageToCropFrame.size.height)/2;
     imageToCropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - imageToCropFrame.size.width)/2;
     [[self imageToCrop] setFrame:imageToCropFrame];
     
-    CGRect cropFrame = [[self cropView] frame];
-    cropFrame.size      = CGSizeMake(imageWidth, imageWidth);
-    cropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - cropFrame.size.height)/2;
-    cropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - cropFrame.size.width)/2;
-    [[self cropView] setFrame:cropFrame];
-    
 }
 
 - (void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
-    NSLog(@"layout called");
     CGRect labelFrame = [[self label] frame];
     labelFrame.origin.y    = 20.0f;
     labelFrame.size.height = 60.0f;
@@ -59,21 +54,18 @@
     
     CGRect imageFrame = [[self imageView] frame];
     imageFrame.size     = CGSizeMake(imageWidth, imageWidth);
-    //imageFrame.origin.y = CGRectGetMaxY(labelFrame);
-    //imageFrame.origin.x = (CGRectGetWidth([[self view] frame]) - imageFrame.size.width)/2;
     [[self imageView] setFrame:imageFrame];
     
     CGRect cropImageFrame = [[self cropImageView] frame];
     cropImageFrame.size     = CGSizeMake(imageWidth, imageWidth);
-    //cropImageFrame.origin.y = CGRectGetMaxY(labelFrame);
     cropImageFrame.origin.x = CGRectGetWidth([[self view] frame]) - cropImageFrame.size.width;
     [[self cropImageView] setFrame:cropImageFrame];
     
-//    CGRect imageToCropFrame = [[self imageToCrop] frame];
-//    imageToCropFrame.size      = CGSizeMake(imageToCropWidth, imageToCropWidth);
-//    imageToCropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - imageToCropFrame.size.height)/2;
-//    imageToCropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - imageToCropFrame.size.width)/2;
-//    [[self imageToCrop] setFrame:imageToCropFrame];
+    CGRect cropFrame = [[self cropView] frame];
+    cropFrame.size      = CGSizeMake(imageWidth, imageWidth);
+    cropFrame.origin.y  = (CGRectGetHeight([[self view] frame]) - cropFrame.size.height)/2;
+    cropFrame.origin.x  = (CGRectGetWidth([[self view] frame]) - cropFrame.size.width)/2;
+    [[self cropView] setFrame:cropFrame];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -123,12 +115,11 @@
 - (UIImageView *)imageToCrop{
     if (!_imageToCrop){
         _imageToCrop = [[UIImageView alloc] initWithFrame:CGRectZero];
-        [_imageToCrop setImage:[UIImage imageNamed:@"imageToCrop"]];
-        //[[_imageToCrop layer] setBorderColor:[UIColor redColor].CGColor];
-        //[[_imageToCrop layer] setBorderWidth:1.0f];
+        _image = [UIImage imageNamed:@"imageToCrop"];
+        [_imageToCrop setImage:_image];
         [_imageToCrop setUserInteractionEnabled:YES];
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didPan:)];
-        //[_imageToCrop addGestureRecognizer:pan];
+        [_imageToCrop addGestureRecognizer:pan];
         UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(didPinch:)];
         [_imageToCrop addGestureRecognizer:pinch];
         [[self view] addSubview:_imageToCrop];
@@ -139,13 +130,10 @@
 - (CropView *)cropView{
     if (!_cropView){
         _cropView = [[CropView alloc] initWithFrame:CGRectZero];
-        //[_cropView setBackgroundColor:[UIColor blueColor]];
-        //[[_cropView layer] setOpacity:0.0f];
-        //[_cropView setAlpha:0.5];
+        [_cropView setBackgroundColor:[UIColor blueColor]];
+        [[_cropView layer] setOpacity:0.2f];
         [[_cropView layer] setZPosition:1.0f];
-        //[[_cropView layer] setBorderWidth:1.0f];
         [_cropView setUserInteractionEnabled:YES];
-        //[[_cropView layer] setBorderColor:[UIColor blackColor].CGColor];
         [[self view] addSubview:_cropView];
         return _cropView;
     }
@@ -166,18 +154,16 @@
 
 - (void)didPan:(UIPanGestureRecognizer *)pan{
     
-//    if (pan.state == UIGestureRecognizerStateChanged){
-//        
-//        CGPoint translation = [pan translationInView:pan.view.superview];
-//        pan.view.center = CGPointMake(pan.view.center.x + translation.x,
-//                                      pan.view.center.y + translation.y);
-//        
-//
-//        
-//        [pan setTranslation:CGPointMake(0, 0) inView:pan.view.superview];
-//    }
-    
-    [[pan view] setCenter:[pan locationInView:[[pan view] superview]]];
+    if (pan.state == UIGestureRecognizerStateChanged){
+        
+        CGPoint translation = [pan translationInView:pan.view.superview];
+        pan.view.center = CGPointMake(pan.view.center.x + translation.x,
+                                      pan.view.center.y + translation.y);
+        
+
+        
+        [pan setTranslation:CGPointMake(0, 0) inView:pan.view.superview];
+    }
     
 }
 
@@ -220,6 +206,32 @@
 //    }
 }
 
+- (UIImage *)croppedImage{
+    return [_image rotatedImageWithtransform:self.imageViewRotation croppedToRect:[self zoomedCropRect]];;
+}
+
+- (CGAffineTransform)imageViewRotation{
+    return _imageToCrop.transform;
+}
+
+- (CGRect)zoomedCropRect{
+    //CGRect cropRect = [_cropView convertRect:_cropView.frame toView:_zoomingView];
+    CGRect cropRect = [_cropView convertRect:_cropView.frame toView:self.view];
+    
+    CGSize size = _image.size;
+    
+    CGFloat ratio = 1.0f;
+    
+    //ratio = CGRectGetWidth(AVMakeRectWithAspectRatioInsideRect(_image.size, _insetRect)) / size.width;
+    ratio = CGRectGetWidth(AVMakeRectWithAspectRatioInsideRect(_image.size, self.view.frame)) / size.width;
+    
+    CGRect zoomedCropRect = CGRectMake(cropRect.origin.x / ratio,
+                                       cropRect.origin.y / ratio,
+                                       cropRect.size.width / ratio,
+                                       cropRect.size.height / ratio);
+    
+    return zoomedCropRect;
+}
 
 #pragma mark - camera
 

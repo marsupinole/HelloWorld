@@ -77,8 +77,7 @@
     return width / height;
 }
 
-- (UIImage *)croppedImage
-{
+- (UIImage *)croppedImage{
     return [_image rotatedImageWithtransform:self.rotation croppedToRect:[self zoomedCropRect]];;
 }
 
@@ -183,6 +182,7 @@
     rect.size.height = _calculatedImageHeight;
     [[self zoomingView] setFrame:rect];
     _insetRect       = rect;
+    NSLog(@"aFloat: %f %f %f %f", _insetRect.size.width, _insetRect.size.height, _insetRect.origin.x, _insetRect.origin.y);
     _minimumImageXOffset = (_overlayXOffset + _overlaySize.width) - _calculatedImageWidth;
     _minimumImageYOffset = (_overlayYOffset + _overlaySize.height) - _calculatedImageHeight;
 }
